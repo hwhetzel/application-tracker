@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, String, Text, Date
 from database import Base
 
+# Database table model for job applications
 class Application(Base):
+    # Name of the PostgreSQL table
     __tablename__ = "applications"
     
     id = Column(Integer, primary_key=True, index=True)
