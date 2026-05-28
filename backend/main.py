@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
-from schemas import ApplicationCreate
+from schemas import ApplicationCreate, ApplicationUpdate
 import crud
 import models
 
@@ -28,7 +28,7 @@ def root():
     return {"message": "Backend running"}
 
 
-# Create new application
+# Create new application route
 @app.post("/applications")
 def create_application(
     application: ApplicationCreate,
@@ -38,9 +38,24 @@ def create_application(
     return crud.create_application(db, application)
 
 
-# Get all saved applications
+# Get all saved applications route
 @app.get("/applications")
 def get_applications(
     db: Session = Depends(get_db)
 ):
     return crud.get_applications(db)
+
+# Update existing application route
+@app.put("/applications/{app_id}")
+def update_application(
+    app_id: int,
+    application: ApplicationUpdate,
+    db: Session = Depends(get_db)
+):
+    #Update application
+    updated = crud.update_application(db, app_id, application)
+
+    if not updated:
+        return {"error": "Application not found"}
+    
+    return updated
