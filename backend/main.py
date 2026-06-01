@@ -59,3 +59,17 @@ def update_application(
         return {"error": "Application not found"}
     
     return updated
+
+# Delete application route
+@app.delete("/applications/{app_id}")
+def delete_application(
+    app_id: int,
+    db: Session = Depends(get_db)
+):
+    #Delete application
+    deleted = crud.delete_application(db, app_id)
+
+    if not deleted:
+        return {"error": "Application not found"}
+    
+    return {"message": "Application deleted successfully"}

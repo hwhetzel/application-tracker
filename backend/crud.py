@@ -49,3 +49,22 @@ def get_applications(db: Session):
 
     # Query all rows from applications table
     return db.query(Application).all()
+
+# Delete an application
+def delete_application(db: Session, app_id: int):
+    # Find application by ID
+    application = db.query(Application).filter(
+        Application.id == app_id
+    ).first()
+
+    # Return None if not found
+    if not application:
+        return None
+    
+    # Delete application from session
+    db.delete(application)
+
+    # Save changes to database
+    db.commit()
+
+    return application
