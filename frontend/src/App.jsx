@@ -44,9 +44,9 @@ function App() {
       await axios.post(
         "http://localhost:8000/applications",
         {
-          company,
-          role,
-          status
+          company_name: company,
+          position: role,
+          status: status
         }
       );
 
@@ -146,10 +146,10 @@ function App() {
               padding: "10px"
             }}
           >
-            <h3>{application.company}</h3>
+            <h3>{application.company_name}</h3>
 
             <p>
-              Role: {application.role}
+              Role: {application.position}
             </p>
 
             <p>
