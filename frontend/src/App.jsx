@@ -1,122 +1,168 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  // Form field states
+  const [company, setCompany] = useState("");
+  const [role, setRole] = useState("");
+  const [status, setStatus] = useState("Applied");
+
+  // Stores all applications returned from backend
+  const [applications, setApplications] = useState([]);
+
+  // Load applications when page first loads
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  // Get all applications from backend
+  const fetchApplications = async () => {
+    try {
+
+      const response = await axios.get(
+        "http://localhost:8000/applications"
+      );
+
+      setApplications(response.data);
+
+    } catch (error) {
+
+      console.error("Error loading applications:", error);
+
+    }
+  };
+
+  // Create new application
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      await axios.post(
+        "http://localhost:8000/applications",
+        {
+          company,
+          role,
+          status
+        }
+      );
+
+      // Clear form after successful submit
+      setCompany("");
+      setRole("");
+      setStatus("Applied");
+
+      // Refresh application list
+      fetchApplications();
+
+    } catch (error) {
+
+      console.error("Error creating application:", error);
+
+    }
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    <div>
+
+      <h1>Job Application Tracker</h1>
+
+      <form onSubmit={handleSubmit}>
+
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+          <label>Company</label>
+          <br />
+
+          <input
+            type="text"
+            value={company}
+            onChange={(e) =>
+              setCompany(e.target.value)
+            }
+            required
+          />
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+
+        <br />
+
+        <div>
+          <label>Role</label>
+          <br />
+
+          <input
+            type="text"
+            value={role}
+            onChange={(e) =>
+              setRole(e.target.value)
+            }
+            required
+          />
+        </div>
+
+        <br />
+
+        <div>
+          <label>Status</label>
+          <br />
+
+          <select
+            value={status}
+            onChange={(e) =>
+              setStatus(e.target.value)
+            }
+          >
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+
+        <br />
+
+        <button type="submit">
+          Add Application
         </button>
-      </section>
 
-      <div className="ticks"></div>
+      </form>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <hr />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <h2>Applications</h2>
+
+      {applications.length === 0 ? (
+        <p>No applications yet.</p>
+      ) : (
+        applications.map((application) => (
+
+          <div
+            key={application.id}
+            style={{
+              border: "1px solid gray",
+              marginBottom: "10px",
+              padding: "10px"
+            }}
+          >
+            <h3>{application.company}</h3>
+
+            <p>
+              Role: {application.role}
+            </p>
+
+            <p>
+              Status: {application.status}
+            </p>
+
+          </div>
+
+        ))
+      )}
+
+    </div>
+  );
 }
 
-export default App
+export default App;
