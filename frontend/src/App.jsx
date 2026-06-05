@@ -12,6 +12,12 @@ function App() {
   // Stores all applications returned from backend
   const [applications, setApplications] = useState([]);
 
+  // Search boxt text
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Current status filter selection
+  const [statusFilter, setStatusFilter] = useState("All");
+
   // Load applications when page first loads
   useEffect(() => {
     fetchApplications();
@@ -102,6 +108,30 @@ function App() {
     }
   };
 
+    // Filter applications before displaying them
+  const filteredApplications = applications.filter(
+    (application) => {
+
+      // Check if company name contains search text
+      const matchesSearch =
+        application.company_name
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          );
+
+      // Check if application matches selected status
+      const matchesStatus =
+        statusFilter === "All" ||
+        application.status === statusFilter;
+
+      return (
+        matchesSearch &&
+        matchesStatus
+      );
+    }
+  );
+
   return (
     <div>
 
@@ -168,57 +198,98 @@ function App() {
 
       <hr />
 
+      <h2>Search & Filter</h2>
+
+      {/* Search by company name */}
+
+      <input
+        type="text"
+        placeholder="Search company..."
+        value={searchTerm}
+        onChange={(e) =>
+          setSearchTerm(e.target.value)
+        }
+      />
+
+      <select
+        value={statusFilter}
+        onChange={(e) =>
+          setStatusFilter(e.target.value)
+        }
+      >
+        <option value="All">
+          All Statuses
+        </option>
+
+        <option value="Applied">
+          Applied
+        </option>
+
+        <option value="Interview">
+          Interview
+        </option>
+
+        <option value="Offer">
+          Offer
+        </option>
+
+        <option value="Rejected">
+          Rejected
+        </option>
+      </select>
+
       <h2>Applications</h2>
 
-      {applications.length === 0 ? (
+      {filteredApplications.length === 0 ? (
         <p>No applications yet.</p>
       ) : (
-        applications.map((application) => (
+        filteredApplications.map(
+          (application) => 
+          (
+            <div
+              key={application.id}
+              style={{
+                border: "1px solid gray",
+                marginBottom: "10px",
+                padding: "10px"
+              }}
+            >
+              <h3>{application.company_name}</h3>
 
-          <div
-            key={application.id}
-            style={{
-              border: "1px solid gray",
-              marginBottom: "10px",
-              padding: "10px"
-            }}
-          >
-            <h3>{application.company_name}</h3>
+              <p>
+                Role: {application.position}
+              </p>
 
-            <p>
-              Role: {application.position}
-            </p>
+              <div>
 
-            <div>
+                <label>Status:</label>
 
-              <label>Status:</label>
+                <select
+                  value={application.status}
+                  onChange={(e) =>
+                    updateStatus(
+                      application.id,
+                      e.target.value
+                    )
+                  }
+                >
+                  <option>Applied</option>
+                  <option>Interview</option>
+                  <option>Offer</option>
+                  <option>Rejected</option>
+                </select>
 
-              <select
-                value={application.status}
-                onChange={(e) =>
-                  updateStatus(
-                    application.id,
-                    e.target.value
-                  )
+              </div>
+
+              <button              
+                onClick={() =>
+                  deleteApplication(application.id)
                 }
               >
-                <option>Applied</option>
-                <option>Interview</option>
-                <option>Offer</option>
-                <option>Rejected</option>
-              </select>
+                Delete
+              </button>
 
             </div>
-
-            <button              
-              onClick={() =>
-                deleteApplication(application.id)
-              }
-            >
-              Delete
-            </button>
-
-          </div>
 
         ))
       )}
