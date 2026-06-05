@@ -12,8 +12,8 @@ class ApplicationCreate(BaseModel):
 
 #Schema used when updating an existing application
 class ApplicationUpdate(BaseModel):
-    company_name: str
-    position: str
-    status: str
+    company_name: str | None = None
+    position: str | None = None
+    status: str | None = None
     date_applied: date | None = None
     notes: str | None = None

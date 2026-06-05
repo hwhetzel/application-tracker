@@ -23,26 +23,25 @@ def create_application(db: Session, app: ApplicationCreate):
 
     return db_application
 
+#Find existing application
 def update_application(db: Session, app_id: int, updated_app: ApplicationUpdate):
-    #Find existing application
-    def update_application(db: Session, app_id: int, updated_app: ApplicationUpdate):
 
-        application = db.query(Application).filter(Application.id == app_id).first()
+    application = db.query(Application).filter(Application.id == app_id).first()
 
-        if not application:
-            return None
+    if not application:
+        return None
 
-        # Only get fields user actually sent
-        update_data = updated_app.model_dump(exclude_unset=True)
+    # Only get fields user actually sent
+    update_data = updated_app.model_dump(exclude_unset=True)
 
-        # Apply only provided fields
-        for key, value in update_data.items():
-            setattr(application, key, value)
+    # Apply only provided fields
+    for key, value in update_data.items():
+        setattr(application, key, value)
 
-        db.commit()
-        db.refresh(application)
+    db.commit()
+    db.refresh(application)
 
-        return application
+    return application
 
 # Retrieve all applications from database
 def get_applications(db: Session):

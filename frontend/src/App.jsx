@@ -65,6 +65,43 @@ function App() {
     }
   };
 
+  // Delete application
+  const deleteApplication = async (id) => {
+
+    try {
+      //Send DELETE request to backend
+      await axios.delete(
+        `http://localhost:8000/applications/${id}`
+      );
+
+      //Refresh application list
+      fetchApplications();
+      
+    } catch (error) {
+      
+      console.error("Error deleting application:", error);
+    }
+  };
+
+  // Updatte application status
+  const updateStatus = async (id, newStatus) => {
+    
+    try {
+      //Send PUT request to backend with new status
+      await axios.put(
+        `http://localhost:8000/applications/${id}`,
+        { status: newStatus }
+      );
+
+      //Refresh application list
+      fetchApplications();
+      
+    } catch (error) {
+
+      console.error("Error updating status:", error);
+    }
+  };
+
   return (
     <div>
 
@@ -152,9 +189,34 @@ function App() {
               Role: {application.position}
             </p>
 
-            <p>
-              Status: {application.status}
-            </p>
+            <div>
+
+              <label>Status:</label>
+
+              <select
+                value={application.status}
+                onChange={(e) =>
+                  updateStatus(
+                    application.id,
+                    e.target.value
+                  )
+                }
+              >
+                <option>Applied</option>
+                <option>Interview</option>
+                <option>Offer</option>
+                <option>Rejected</option>
+              </select>
+
+            </div>
+
+            <button              
+              onClick={() =>
+                deleteApplication(application.id)
+              }
+            >
+              Delete
+            </button>
 
           </div>
 
