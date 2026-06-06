@@ -8,6 +8,7 @@ function App() {
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("Applied");
+  const [notes, setNotes] = useState("");
 
   // Stores all applications returned from backend
   const [applications, setApplications] = useState([]);
@@ -52,7 +53,8 @@ function App() {
         {
           company_name: company,
           position: role,
-          status: status
+          status: status,
+          notes:notes
         }
       );
 
@@ -60,6 +62,7 @@ function App() {
       setCompany("");
       setRole("");
       setStatus("Applied");
+      setNotes("");
 
       // Refresh application list
       fetchApplications();
@@ -219,6 +222,22 @@ function App() {
 
         <br />
 
+        <div>
+          <label>Notes</label>
+          <br />
+
+          <textarea
+            value={notes}
+            onChange={(e) =>
+              setNotes(e.target.value)
+            }
+            rows = "4"
+            cols = "50"
+          />
+        </div>
+
+        <br />
+
         <button type="submit">
           Add Application
         </button>
@@ -350,6 +369,14 @@ function App() {
                 </select>
 
               </div>
+
+              <p> 
+                <strong>Notes:</strong>
+                
+                {" "}
+
+                {application.notes || "No notes"}
+              </p>
 
               <button              
                 onClick={() =>

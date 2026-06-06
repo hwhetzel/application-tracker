@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Date
+from sqlalchemy import Column, Integer, String, Date
 from database import Base
 
 # Database table model for job applications
@@ -11,4 +11,4 @@ class Application(Base):
     position = Column(String, nullable=False)
     status = Column(String, nullable=False)
     date_applied = Column(Date, nullable=False)
-    notes = Column(Text)
+    notes = Column(String, nullable=True)
