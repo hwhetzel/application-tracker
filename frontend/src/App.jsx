@@ -132,6 +132,35 @@ function App() {
     }
   );
 
+  // Total number of applications
+  const totalApplications =
+    applications.length;
+
+  // Count applications by status
+  const appliedCount =
+    applications.filter(
+      (app) =>
+        app.status === "Applied"
+    ).length;
+
+  const interviewCount =
+    applications.filter(
+      (app) =>
+        app.status === "Interview"
+    ).length;
+
+  const offerCount =
+    applications.filter(
+      (app) =>
+        app.status === "Offer"
+    ).length;
+
+  const rejectedCount =
+    applications.filter(
+      (app) =>
+        app.status === "Rejected"
+    ).length;
+
   return (
     <div>
 
@@ -238,6 +267,47 @@ function App() {
         </option>
       </select>
 
+            <hr />
+
+      {/* Dashboard Statistics */}
+
+      <h2>Dashboard</h2>
+
+      <div>
+
+        <p>
+          Total Applications:
+          {" "}
+          {totalApplications}
+        </p>
+
+        <p>
+          Applied:
+          {" "}
+          {appliedCount}
+        </p>
+
+        <p>
+          Interview:
+          {" "}
+          {interviewCount}
+        </p>
+
+        <p>
+          Offer:
+          {" "}
+          {offerCount}
+        </p>
+
+        <p>
+          Rejected:
+          {" "}
+          {rejectedCount}
+        </p>
+
+      </div>
+
+      <hr />
       <h2>Applications</h2>
 
       {filteredApplications.length === 0 ? (
