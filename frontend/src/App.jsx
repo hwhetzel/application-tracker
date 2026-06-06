@@ -19,6 +19,9 @@ function App() {
   // Current status filter selection
   const [statusFilter, setStatusFilter] = useState("All");
 
+  // Current sort option selected by user
+  const [sortOption, setSortOption] = useState("Newest");
+
   // Load applications when page first loads
   useEffect(() => {
     fetchApplications();
@@ -132,6 +135,45 @@ function App() {
         matchesSearch &&
         matchesStatus
       );
+    }
+  );
+
+  const sortedApplications = [...filteredApplications];
+
+  // Sort applications based on dropdown selection
+  sortedApplications.sort(
+    (a, b) => {
+
+      // Newest application first
+      if (sortOption === "Newest") {
+        return b.id - a.id;
+      }
+
+      // Oldest application first
+      if (sortOption === "Oldest") {
+        return a.id - b.id;
+      }
+
+      // Alphabetical company name
+      if (sortOption === "Company A-Z") {
+
+        return a.company_name.localeCompare(
+          b.company_name
+        );
+
+      }
+
+      // Reverse alphabetical company name
+      if (sortOption === "Company Z-A") {
+
+        return b.company_name.localeCompare(
+          a.company_name
+        );
+
+      }
+
+      return 0;
+
     }
   );
 
@@ -286,7 +328,23 @@ function App() {
         </option>
       </select>
 
-            <hr />
+      <br />
+      
+      <label>Sort By:</label>
+
+      <select
+        value={sortOption}
+        onChange={(e) =>
+          setSortOption(e.target.value)
+        }
+      >
+        <option>Newest</option>
+        <option>Oldest</option>
+        <option>Company A-Z</option>
+        <option>Company Z-A</option>
+      </select>
+
+      <hr />
 
       {/* Dashboard Statistics */}
 
@@ -332,7 +390,7 @@ function App() {
       {filteredApplications.length === 0 ? (
         <p>No applications yet.</p>
       ) : (
-        filteredApplications.map(
+        sortedApplications.map(
           (application) => 
           (
             <div
@@ -372,7 +430,7 @@ function App() {
 
               <p> 
                 <strong>Notes:</strong>
-                
+
                 {" "}
 
                 {application.notes || "No notes"}
