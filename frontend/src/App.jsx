@@ -9,6 +9,7 @@ function App() {
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("Applied");
   const [notes, setNotes] = useState("");
+  const [dateApplied, setDateApplied] = useState("");
 
   // Stores all applications returned from backend
   const [applications, setApplications] = useState([]);
@@ -57,6 +58,7 @@ function App() {
           company_name: company,
           position: role,
           status: status,
+          date_applied: dateApplied || null,
           notes:notes
         }
       );
@@ -65,6 +67,7 @@ function App() {
       setCompany("");
       setRole("");
       setStatus("Applied");
+      setDateApplied("");
       setNotes("");
 
       // Refresh application list
@@ -146,12 +149,16 @@ function App() {
 
       // Newest application first
       if (sortOption === "Newest") {
-        return b.id - a.id;
+        return (
+            new Date(b.date_applied) - new Date(a.date_applied)
+          );
       }
 
       // Oldest application first
       if (sortOption === "Oldest") {
-        return a.id - b.id;
+        return (
+            new Date(a.date_applied) - new Date(b.date_applied)
+          );
       }
 
       // Alphabetical company name
@@ -260,6 +267,28 @@ function App() {
             <option>Offer</option>
             <option>Rejected</option>
           </select>
+        </div>
+
+        <br />
+
+        <div>
+
+          <label>
+            Date Applied
+          </label>
+
+          <br />
+
+          <input
+            type="date"
+            value={dateApplied}
+            onChange={(e) =>
+              setDateApplied(
+                e.target.value
+              )
+            }
+          />
+
         </div>
 
         <br />
@@ -427,6 +456,18 @@ function App() {
                 </select>
 
               </div>
+
+              <p>
+
+                <strong>
+                  Applied On:
+                </strong>
+
+                {" "}
+
+                {application.date_applied}
+
+              </p>
 
               <p> 
                 <strong>Notes:</strong>
