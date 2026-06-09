@@ -67,3 +67,14 @@ def delete_application(db: Session, app_id: int):
     db.commit()
 
     return application
+
+# Get one application by ID
+def get_application(
+    db: Session,
+    app_id: int
+):
+
+    return (
+        db.query(Application).filter(Application.id == app_id)
+        .first()
+    )

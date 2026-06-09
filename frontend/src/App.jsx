@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
+import { Link } from "react-router-dom";
 
 function App() {
 
@@ -430,7 +431,19 @@ function App() {
                 padding: "10px"
               }}
             >
-              <h3>{application.company_name}</h3>
+              <h3>
+
+                <Link
+                  to={
+                    `/applications/${application.id}`
+                  }
+                >
+
+                  {application.company_name}
+
+                </Link>
+
+              </h3>
 
               <p>
                 Role: {application.position}

@@ -58,6 +58,18 @@ def get_applications(
 ):
     return crud.get_applications(db)
 
+# Get single application
+@app.get("/applications/{app_id}")
+def get_application(
+    app_id: int,
+    db: Session = Depends(get_db)
+):
+
+    return crud.get_application(
+        db,
+        app_id
+    )
+
 # Update existing application route
 @app.put("/applications/{app_id}")
 def update_application(
