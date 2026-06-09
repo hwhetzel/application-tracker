@@ -9,6 +9,8 @@ class ApplicationCreate(BaseModel):
     status: str
     date_applied: date | None = None
     notes: str | None = None
+    job_link: str | None = None
+    location: str | None = None
 
 #Schema used when updating an existing application
 class ApplicationUpdate(BaseModel):
@@ -17,3 +19,5 @@ class ApplicationUpdate(BaseModel):
     status: str | None = None
     date_applied: date | None = None
     notes: str | None = None
+    job_link: str | None = None
+    location: str | None = None

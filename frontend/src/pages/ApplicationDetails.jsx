@@ -86,11 +86,40 @@ function ApplicationDetails() {
         {application.date_applied}
       </p>
 
-      <p>
-        Notes:
-        {" "}
-        {application.notes}
-      </p>
+        <p>
+            Location:
+            {" "}
+            {application.location}
+        </p>
+
+        <p>
+            Job Posting:
+            {" "}
+            <a
+                href={application.job_link}
+                target="_blank"
+                rel="noreferrer"
+            >
+                Open Job Posting
+            </a>
+        </p>
+
+        <div>
+
+            <h3>
+                Notes
+            </h3>
+
+            <pre
+                style={{
+                whiteSpace: "pre-wrap",
+                fontFamily: "inherit"
+                }}
+            >
+                {application.notes}
+            </pre>
+
+        </div>
 
     </div>
 

@@ -12,3 +12,5 @@ class Application(Base):
     status = Column(String, nullable=False)
     date_applied = Column(Date, nullable=False)
     notes = Column(String, nullable=True)
+    job_link = Column(String, nullable=True)
+    location = Column(String, nullable=True)

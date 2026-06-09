@@ -11,6 +11,8 @@ function App() {
   const [status, setStatus] = useState("Applied");
   const [notes, setNotes] = useState("");
   const [dateApplied, setDateApplied] = useState("");
+  const [jobLink, setJobLink] = useState("");
+  const [location, setLocation] = useState("");
 
   // Stores all applications returned from backend
   const [applications, setApplications] = useState([]);
@@ -60,7 +62,10 @@ function App() {
           position: role,
           status: status,
           date_applied: dateApplied || null,
-          notes:notes
+          notes:notes,
+          job_link: jobLink,
+          location: location
+
         }
       );
 
@@ -70,6 +75,8 @@ function App() {
       setStatus("Applied");
       setDateApplied("");
       setNotes("");
+      setJobLink("");
+      setLocation("");
 
       // Refresh application list
       fetchApplications();
@@ -295,6 +302,46 @@ function App() {
         <br />
 
         <div>
+
+          <label>
+            Location
+          </label>
+
+          <br />
+
+          <input
+            type="text"
+            value={location}
+            onChange={(e) =>
+              setLocation(e.target.value)
+            }
+          />
+
+        </div>
+
+        <br />
+
+        <div>
+
+          <label>
+            Job Link
+          </label>
+
+          <br />
+
+          <input
+            type="url"
+            value={jobLink}
+            onChange={(e) =>
+              setJobLink(e.target.value)
+            }
+          />
+
+        </div>
+
+        <br />
+
+        <div>
           <label>Notes</label>
           <br />
 
@@ -303,8 +350,8 @@ function App() {
             onChange={(e) =>
               setNotes(e.target.value)
             }
-            rows = "4"
-            cols = "50"
+            rows = "10"
+            cols = "60"
           />
         </div>
 
