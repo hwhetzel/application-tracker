@@ -529,14 +529,6 @@ function App() {
 
               </p>
 
-              <p> 
-                <strong>Notes:</strong>
-
-                {" "}
-
-                {application.notes || "No notes"}
-              </p>
-
               <button              
                 onClick={() =>
                   deleteApplication(application.id)
