@@ -222,147 +222,164 @@ function App() {
     ).length;
 
   return (
-    <div>
+    <div className="container">
+
+      <nav className="navbar">
+
+        <h1>
+          Job Application Tracker
+        </h1>
+
+        <div>
+
+          Total Applications:
+          {" "}
+          {applications.length}
+
+        </div>
+
+      </nav>
 
       <h1>Job Application Tracker</h1>
 
-      <form onSubmit={handleSubmit}>
+      <div className="form-card">
+        <form onSubmit={handleSubmit}>
 
-        <div>
-          <label>Company</label>
-          <br />
+          <div>
+            <label>Company</label>
+            <br />
 
-          <input
-            type="text"
-            value={company}
-            onChange={(e) =>
-              setCompany(e.target.value)
-            }
-            required
-          />
-        </div>
-
-        <br />
-
-        <div>
-          <label>Role</label>
-          <br />
-
-          <input
-            type="text"
-            value={role}
-            onChange={(e) =>
-              setRole(e.target.value)
-            }
-            required
-          />
-        </div>
-
-        <br />
-
-        <div>
-          <label>Status</label>
-          <br />
-
-          <select
-            value={status}
-            onChange={(e) =>
-              setStatus(e.target.value)
-            }
-          >
-            <option>Applied</option>
-            <option>Interview</option>
-            <option>Offer</option>
-            <option>Rejected</option>
-          </select>
-        </div>
-
-        <br />
-
-        <div>
-
-          <label>
-            Date Applied
-          </label>
+            <input
+              type="text"
+              value={company}
+              onChange={(e) =>
+                setCompany(e.target.value)
+              }
+              required
+            />
+          </div>
 
           <br />
 
-          <input
-            type="date"
-            value={dateApplied}
-            onChange={(e) =>
-              setDateApplied(
-                e.target.value
-              )
-            }
-          />
+          <div>
+            <label>Role</label>
+            <br />
 
-        </div>
-
-        <br />
-
-        <div>
-
-          <label>
-            Location
-          </label>
+            <input
+              type="text"
+              value={role}
+              onChange={(e) =>
+                setRole(e.target.value)
+              }
+              required
+            />
+          </div>
 
           <br />
 
-          <input
-            type="text"
-            value={location}
-            onChange={(e) =>
-              setLocation(e.target.value)
-            }
-          />
+          <div>
+            <label>Status</label>
+            <br />
 
-        </div>
-
-        <br />
-
-        <div>
-
-          <label>
-            Job Link
-          </label>
+            <select
+              value={status}
+              onChange={(e) =>
+                setStatus(e.target.value)
+              }
+            >
+              <option>Applied</option>
+              <option>Interview</option>
+              <option>Offer</option>
+              <option>Rejected</option>
+            </select>
+          </div>
 
           <br />
 
-          <input
-            type="url"
-            value={jobLink}
-            onChange={(e) =>
-              setJobLink(e.target.value)
-            }
-          />
+          <div>
 
-        </div>
+            <label>
+              Date Applied
+            </label>
 
-        <br />
+            <br />
 
-        <div>
-          <label>Notes</label>
+            <input
+              type="date"
+              value={dateApplied}
+              onChange={(e) =>
+                setDateApplied(
+                  e.target.value
+                )
+              }
+            />
+
+          </div>
+
           <br />
 
-          <textarea
-            value={notes}
-            onChange={(e) =>
-              setNotes(e.target.value)
-            }
-            rows = "10"
-            cols = "60"
-          />
-        </div>
+          <div>
 
-        <br />
+            <label>
+              Location
+            </label>
 
-        <button type="submit">
-          Add Application
-        </button>
+            <br />
 
-      </form>
+            <input
+              type="text"
+              value={location}
+              onChange={(e) =>
+                setLocation(e.target.value)
+              }
+            />
 
+          </div>
+
+          <br />
+
+          <div>
+
+            <label>
+              Job Link
+            </label>
+
+            <br />
+
+            <input
+              type="url"
+              value={jobLink}
+              onChange={(e) =>
+                setJobLink(e.target.value)
+              }
+            />
+
+          </div>
+
+          <br />
+
+          <div>
+            <label>Notes</label>
+            <br />
+
+            <textarea
+              value={notes}
+              onChange={(e) =>
+                setNotes(e.target.value)
+              }
+              rows = "10"
+              cols = "60"
+            />
+          </div>
+
+          <br />
+
+          <button type="submit">
+            Add Application
+          </button>
+
+        </form>
+      </div>
       <hr />
 
       <h2>Search & Filter</h2>
@@ -462,85 +479,136 @@ function App() {
       </div>
 
       <hr />
+
       <h2>Applications</h2>
 
-      {filteredApplications.length === 0 ? (
-        <p>No applications yet.</p>
-      ) : (
-        sortedApplications.map(
-          (application) => 
-          (
-            <div
-              key={application.id}
-              style={{
-                border: "1px solid gray",
-                marginBottom: "10px",
-                padding: "10px"
-              }}
-            >
-              <h3>
+      <div className="board">
 
-                <Link
-                  to={
-                    `/applications/${application.id}`
-                  }
-                >
+        <div className="column">
 
-                  {application.company_name}
+          <h2>Applied</h2>
 
-                </Link>
+          {applications
+            .filter(
+              app =>
+                app.status === "Applied"
+            )
+            .map(app => (
 
-              </h3>
+              <div
+                key={app.id}
+                className="application-card"
+              >
 
-              <p>
-                Role: {application.position}
-              </p>
+                <h3>
+                  {app.company_name}
+                </h3>
 
-              <div>
-
-                <label>Status:</label>
-
-                <select
-                  value={application.status}
-                  onChange={(e) =>
-                    updateStatus(
-                      application.id,
-                      e.target.value
-                    )
-                  }
-                >
-                  <option>Applied</option>
-                  <option>Interview</option>
-                  <option>Offer</option>
-                  <option>Rejected</option>
-                </select>
+                <p>
+                  {app.position}
+                </p>
 
               </div>
 
-              <p>
+            ))}
 
-                <strong>
-                  Applied On:
-                </strong>
+        </div>
 
-                {" "}
+        <div className="column">
 
-                {application.date_applied}
+          <h2>Interview</h2>
 
-              </p>
+          {applications
+            .filter(
+              app =>
+                app.status === "Interview"
+            )
+            .map(app => (
 
-              <button              
-                onClick={() =>
-                  deleteApplication(application.id)
-                }
+              <div
+                key={app.id}
+                className="application-card"
               >
-                Delete
-              </button>
 
-            </div>
+                <h3>
+                    <Link
+                      to={`/applications/${app.id}`}
+                    >
+                      {app.company_name}
+                    </Link>
+                </h3>
 
-        ))
-      )}
+                <p>
+                  {app.position}
+                </p>
+
+              </div>
+
+            ))}
+
+        </div>
+
+        <div className="column">
+
+          <h2>Offer</h2>
+
+          {applications
+            .filter(
+              app =>
+                app.status === "Offer"
+            )
+            .map(app => (
+
+              <div
+                key={app.id}
+                className="application-card"
+              >
+
+                <h3>
+                  {app.company_name}
+                </h3>
+
+                <p>
+                  {app.position}
+                </p>
+
+              </div>
+
+            ))}
+
+        </div>
+
+        <div className="column">
+
+          <h2>Rejected</h2>
+
+          {applications
+            .filter(
+              app =>
+                app.status === "Rejected"
+            )
+            .map(app => (
+
+              <div
+                key={app.id}
+                className="application-card"
+              >
+
+                <h3>
+                  {app.company_name}
+                </h3>
+
+                <p>
+                  {app.position}
+                </p>
+
+              </div>
+
+            ))}
+
+        </div>
+
+      </div>
 
     </div>
   );

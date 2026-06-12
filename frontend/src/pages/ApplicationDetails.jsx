@@ -292,14 +292,22 @@ function ApplicationDetails() {
 
         ) : (
 
-        <pre
-            style={{
-            whiteSpace: "pre-wrap",
-            fontFamily: "inherit"
-            }}
-        >
-            {application.notes}
-        </pre>
+        <div className="notes-card">
+
+            <h3>
+                Notes
+            </h3>
+
+            <pre
+                style={{
+                whiteSpace: "pre-wrap",
+                fontFamily: "inherit"
+                }}
+            >
+                {application.notes}
+            </pre>
+
+        </div>
 
         )}
 

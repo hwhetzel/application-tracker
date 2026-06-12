@@ -182,3 +182,98 @@
     border-right-color: var(--border);
   }
 }
+
+/* Main page wrapper */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Top navigation */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  background-color: #242424;
+  color: white;
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+button {
+
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+
+}
+
+button:hover {
+
+  transform: translateY(-2px);
+
+}
+
+.form-card {
+
+  background: #2c2c2c;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  margin-bottom: 30px;
+
+}
+
+/* Kanban Board layout */
+.board {
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+}
+
+.column {
+
+  background: #1f1f1f;
+  padding: 15px;
+  border-radius: 10px;
+  min-height: 400px;
+
+}
+
+.column h2 {
+
+  text-align: center;
+
+}
+
+.application-card {
+
+  background: #333333;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow:
+    0 2px 6px rgba(0,0,0,.1);
+
+}
+
+/* Application details page */
+.notes-card {
+
+  background: #333333;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+
+}
