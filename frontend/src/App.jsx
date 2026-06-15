@@ -137,14 +137,8 @@ function App() {
             searchTerm.toLowerCase()
           );
 
-      // Check if application matches selected status
-      const matchesStatus =
-        statusFilter === "All" ||
-        application.status === statusFilter;
-
       return (
-        matchesSearch &&
-        matchesStatus
+        matchesSearch
       );
     }
   );
@@ -158,14 +152,14 @@ function App() {
       // Newest application first
       if (sortOption === "Newest") {
         return (
-            new Date(b.date_applied) - new Date(a.date_applied)
+            new Date(b.date_applied || 0) - new Date(a.date_applied || 0)
           );
       }
 
       // Oldest application first
       if (sortOption === "Oldest") {
         return (
-            new Date(a.date_applied) - new Date(b.date_applied)
+            new Date(a.date_applied || 0) - new Date(b.date_applied || 0)
           );
       }
 
@@ -395,33 +389,6 @@ function App() {
         }
       />
 
-      <select
-        value={statusFilter}
-        onChange={(e) =>
-          setStatusFilter(e.target.value)
-        }
-      >
-        <option value="All">
-          All Statuses
-        </option>
-
-        <option value="Applied">
-          Applied
-        </option>
-
-        <option value="Interview">
-          Interview
-        </option>
-
-        <option value="Offer">
-          Offer
-        </option>
-
-        <option value="Rejected">
-          Rejected
-        </option>
-      </select>
-
       <br />
       
       <label>Sort By:</label>
@@ -488,7 +455,7 @@ function App() {
 
           <h2>Applied</h2>
 
-          {applications
+          {sortedApplications
             .filter(
               app =>
                 app.status === "Applied"
@@ -524,7 +491,7 @@ function App() {
 
           <h2>Interview</h2>
 
-          {applications
+          {sortedApplications
             .filter(
               app =>
                 app.status === "Interview"
@@ -560,7 +527,7 @@ function App() {
 
           <h2>Offer</h2>
 
-          {applications
+          {sortedApplications
             .filter(
               app =>
                 app.status === "Offer"
@@ -596,7 +563,7 @@ function App() {
 
           <h2>Rejected</h2>
 
-          {applications
+          {sortedApplications
             .filter(
               app =>
                 app.status === "Rejected"
