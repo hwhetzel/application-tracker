@@ -234,8 +234,6 @@ function App() {
 
       </nav>
 
-      <h1>Job Application Tracker</h1>
-
       <div className="form-card">
         <form onSubmit={handleSubmit}>
 
@@ -478,6 +476,10 @@ function App() {
                 </p>
 
                 <p>
+                  {app.location}
+                </p>
+
+                <p>
                   {app.date_applied}
                 </p>
 
@@ -511,6 +513,10 @@ function App() {
 
                 <p>
                   {app.position}
+                </p>
+                
+                <p>
+                  {app.location}
                 </p>
                 
                 <p>
@@ -550,6 +556,10 @@ function App() {
                 </p>
                 
                 <p>
+                  {app.location}
+                </p>
+                
+                <p>
                   {app.date_applied}
                 </p>
 
@@ -583,6 +593,10 @@ function App() {
 
                 <p>
                   {app.position}
+                </p>
+                
+                <p>
+                  {app.location}
                 </p>
                 
                 <p>
