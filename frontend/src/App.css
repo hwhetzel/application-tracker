@@ -248,28 +248,48 @@ button:hover {
   padding: 15px;
   border-radius: 10px;
   min-height: 400px;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .column h2 {
 
   text-align: center;
+  position: sticky;
+  top: 0;
+  padding: 10px 0;
 
 }
 
 .application-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 14px;
   margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
   transition: 0.2s ease;
+
+  border-left: 5px solid #3b82f6;
+}
+
+.column-content {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* Hover effect */
 .application-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* Company name */
+.application-card h3 {
+  margin: 0;
+  font-size: 16px;
 }
 
 /* Company link */
@@ -297,11 +317,75 @@ button:hover {
 }
 
 /* Application details page */
-.notes-card {
 
-  background: #333333;
+.details-container {
+  max-width: 1100px;
+  margin: 30px auto;
   padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
+}
 
+.details-header {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.details-card {
+  background: white;
+  color: #111827;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+.details-card h3,
+.details-header h1,
+.details-header h3 {
+  color: #111827;
+}
+
+.details-card input,
+.details-card textarea,
+.details-card select {
+  color: #111827;
+  background: white;
+  border: 1px solid #d1d5db;
+}
+
+.notes-card {
+  min-height: 350px;
+}
+
+.notes-card textarea {
+  width: 100%;
+  min-height: 300px;
+  resize: vertical;
+}
+
+.status-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #dbeafe;
+  color: #111827;
+}
+
+.button-row {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
 }

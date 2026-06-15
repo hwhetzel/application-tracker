@@ -142,209 +142,225 @@ function ApplicationDetails() {
 
   }
 
-  return (
+return (
 
-    <div>
+  <div className="details-container">
 
-        <Link to="/">
-            Back To Applications
-        </Link>
+    <Link
+      to="/"
+      className="back-link"
+    >
+      ← Back To Applications
+    </Link>
 
-        <br />
-        <br />
+    <div className="details-header">
 
       <h1>
         {application.company_name}
       </h1>
 
-      <p>
-        Role:
-        {" "}
+      <h3>
         {application.position}
-      </p>
+      </h3>
+
+      <span className="status-badge">
+        {application.status}
+      </span>
+
+    </div>
+
+    <div className="details-grid">
+
+      <div className="details-card">
+
+        <h3>
+          Application Information
+        </h3>
 
         {editing ? (
 
-            <div>
+          <div>
 
-                <label>Status</label>
+            <label>Status</label>
 
-                <br />
+            <br />
 
-                <select
-                value={status}
-                onChange={(e) =>
-                    setStatus(
-                    e.target.value
-                    )
-                }
-                >
-                <option>Applied</option>
-                <option>Interview</option>
-                <option>Offer</option>
-                <option>Rejected</option>
-                </select>
+            <select
+              value={status}
+              onChange={(e) =>
+                setStatus(
+                  e.target.value
+                )
+              }
+            >
+              <option>Applied</option>
+              <option>Interview</option>
+              <option>Offer</option>
+              <option>Rejected</option>
+            </select>
 
-            </div>
+          </div>
 
         ) : (
 
-        <p>
-            Status: {application.status}
-        </p>
+          <p>
+            <strong>Status:</strong>
+            {" "}
+            {application.status}
+          </p>
 
         )}
 
-      <p>
-        Applied On:
-        {" "}
-        {application.date_applied}
-      </p>
+        <p>
+          <strong>Applied On:</strong>
+          {" "}
+          {application.date_applied}
+        </p>
+
+        <br />
 
         {editing ? (
 
-            <div>
+          <div>
 
-                <label>Location</label>
+            <label>Location</label>
 
-                <br />
+            <br />
 
-                <input
-                type="text"
-                value={location}
-                onChange={(e) =>
-                    setLocation(
-                    e.target.value
-                    )
-                }
-                />
+            <input
+              type="text"
+              value={location}
+              onChange={(e) =>
+                setLocation(
+                  e.target.value
+                )
+              }
+            />
 
-            </div>
+          </div>
 
         ) : (
 
-        <p>
-            Location: {application.location}
-        </p>
+          <p>
+            <strong>Location:</strong>
+            {" "}
+            {application.location}
+          </p>
 
         )}
 
-       {editing ? (
+        <br />
 
-            <div>
+        {editing ? (
 
-                <label>Job Link</label>
+          <div>
 
-                <br />
+            <label>Job Link</label>
 
-                <input
-                type="text"
-                value={jobLink}
-                onChange={(e) =>
-                    setJobLink(
-                    e.target.value
-                    )
-                }
-                />
+            <br />
 
-            </div>
+            <input
+              type="text"
+              value={jobLink}
+              onChange={(e) =>
+                setJobLink(
+                  e.target.value
+                )
+              }
+            />
+
+          </div>
 
         ) : (
 
-        <p>
+          <p>
 
-            Job Posting:
+            <strong>Job Posting:</strong>
 
             {" "}
 
             <a
-            href={application.job_link}
-            target="_blank"
-            rel="noreferrer"
+              href={application.job_link}
+              target="_blank"
+              rel="noreferrer"
             >
-            Open Job Posting
+              Open Job Posting
             </a>
 
-        </p>
+          </p>
 
         )}
+
+      </div>
+
+      <div className="details-card notes-card">
+
+        <h3>
+          Notes
+        </h3>
 
         {editing ? (
 
-            <div>
-
-                <label>Notes</label>
-
-                <br />
-
-                <textarea
-                rows="10"
-                cols="60"
-                value={notes}
-                onChange={(e) =>
-                    setNotes(
-                    e.target.value
-                    )
-                }
-                />
-
-            </div>
+          <textarea
+            rows="15"
+            value={notes}
+            onChange={(e) =>
+              setNotes(
+                e.target.value
+              )
+            }
+          />
 
         ) : (
 
-        <div className="notes-card">
-
-            <h3>
-                Notes
-            </h3>
-
-            <pre
-                style={{
-                whiteSpace: "pre-wrap",
-                fontFamily: "inherit"
-                }}
-            >
-                {application.notes}
-            </pre>
-
-        </div>
+          <pre
+            style={{
+              whiteSpace: "pre-wrap",
+              fontFamily: "inherit"
+            }}
+          >
+            {application.notes}
+          </pre>
 
         )}
 
-        {editing ? (
-
-            <button
-                onClick={handleUpdate}
-            >
-                Save Changes
-            </button>
-
-        ) : (
-
-            <button
-                onClick={() =>
-                setEditing(true)
-                }
-            >
-                Edit Application
-            </button>
-
-        )}
-
-        <br />
-        <br />
-
-        <button
-            onClick={handleDelete}
-        >
-            Delete Application
-        </button>
-
-        
+      </div>
 
     </div>
 
-  );
+    <div className="button-row">
+
+      {editing ? (
+
+        <button
+          onClick={handleUpdate}
+        >
+          Save Changes
+        </button>
+
+      ) : (
+
+        <button
+          onClick={() =>
+            setEditing(true)
+          }
+        >
+          Edit Application
+        </button>
+
+      )}
+
+      <button
+        onClick={handleDelete}
+      >
+        Delete Application
+      </button>
+
+    </div>
+
+  </div>
+
+);
 
 }
 
