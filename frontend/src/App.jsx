@@ -501,11 +501,17 @@ function App() {
               >
 
                 <h3>
-                  {app.company_name}
+                  <Link to={`/applications/${app.id}`}>
+                    {app.company_name}
+                  </Link>
                 </h3>
 
                 <p>
                   {app.position}
+                </p>
+
+                <p>
+                  {app.date_applied}
                 </p>
 
               </div>
@@ -531,15 +537,17 @@ function App() {
               >
 
                 <h3>
-                    <Link
-                      to={`/applications/${app.id}`}
-                    >
-                      {app.company_name}
-                    </Link>
+                  <Link to={`/applications/${app.id}`}>
+                    {app.company_name}
+                  </Link>
                 </h3>
 
                 <p>
                   {app.position}
+                </p>
+                
+                <p>
+                  {app.date_applied}
                 </p>
 
               </div>
@@ -565,11 +573,17 @@ function App() {
               >
 
                 <h3>
-                  {app.company_name}
+                  <Link to={`/applications/${app.id}`}>
+                    {app.company_name}
+                  </Link>
                 </h3>
 
                 <p>
                   {app.position}
+                </p>
+                
+                <p>
+                  {app.date_applied}
                 </p>
 
               </div>
@@ -595,11 +609,17 @@ function App() {
               >
 
                 <h3>
-                  {app.company_name}
+                  <Link to={`/applications/${app.id}`}>
+                    {app.company_name}
+                  </Link>
                 </h3>
 
                 <p>
                   {app.position}
+                </p>
+                
+                <p>
+                  {app.date_applied}
                 </p>
 
               </div>
