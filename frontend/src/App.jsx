@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 import { Link } from "react-router-dom";
+import { DragDropContext, Droppable, Draggable} from "@hello-pangea/dnd";
 
 function App() {
 
@@ -123,6 +124,43 @@ function App() {
 
       console.error("Error updating status:", error);
     }
+  };
+
+  // Runs when user finishes dragging a card
+  const handleDragEnd = async (result) => {
+
+    // Dropped outside board
+    if (!result.destination) {
+      return;
+    }
+
+    const applicationId =
+      parseInt(result.draggableId);
+
+    const newStatus =
+      result.destination.droppableId;
+
+    try {
+
+      await axios.put(
+        `http://localhost:8000/applications/${applicationId}`,
+        {
+          status: newStatus
+        }
+      );
+
+      // Refresh board
+      fetchApplications();
+
+    } catch (error) {
+
+      console.error(
+        "Error updating status:",
+        error
+      );
+
+    }
+
   };
 
     // Filter applications before displaying them
@@ -446,170 +484,293 @@ function App() {
       <hr />
 
       <h2>Applications</h2>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        
+        <div className="board">
 
-      <div className="board">
+          <Droppable
+            droppableId="Applied"
+          >
 
-        <div className="column">
+          {(provided) => (
 
-          <h2>Applied</h2>
+          <div
+            className="column"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
 
-          {sortedApplications
-            .filter(
-              app =>
-                app.status === "Applied"
-            )
-            .map(app => (
+            <h2>Applied</h2>
 
-              <div
-                key={app.id}
-                className="application-card"
-              >
+            {sortedApplications
+              .filter(
+                app =>
+                  app.status === "Applied"
+              )
+              .map((app, index) => (
 
-                <h3>
-                  <Link to={`/applications/${app.id}`}>
-                    {app.company_name}
-                  </Link>
-                </h3>
+                <Draggable
+                  draggableId={String(app.id)}
+                  index={index}
+                  key={app.id}
+                >
 
-                <p>
-                  {app.position}
-                </p>
+                {(provided) => (
 
-                <p>
-                  {app.location}
-                </p>
+                <div
+                  className="application-card"
 
-                <p>
-                  {app.date_applied}
-                </p>
+                  ref={provided.innerRef}
 
-              </div>
+                  {...provided.draggableProps}
 
-            ))}
+                  {...provided.dragHandleProps}
+                >
+
+                  <h3>
+                    <Link to={`/applications/${app.id}`}>
+                      {app.company_name}
+                    </Link>
+                  </h3>
+
+                  <p>
+                    {app.position}
+                  </p>
+
+                  <p>
+                    {app.location}
+                  </p>
+
+                  <p>
+                    {app.date_applied}
+                  </p>
+
+                </div>
+                )}
+                </Draggable>
+
+              ))}
+
+              {provided.placeholder}
+
+          </div>
+
+            )}
+          </Droppable>
+
+          <Droppable
+            droppableId="Interview"
+          >
+
+          {(provided) => (
+
+          <div
+            className="column"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+
+            <h2>Interview</h2>
+
+            {sortedApplications
+              .filter(
+                app =>
+                  app.status === "Interview"
+              )
+              .map((app, index) => (
+
+                <Draggable
+                  draggableId={String(app.id)}
+                  index={index}
+                  key={app.id}
+                >
+
+                {(provided) => (
+
+                <div
+                  className="application-card"
+
+                  ref={provided.innerRef}
+
+                  {...provided.draggableProps}
+
+                  {...provided.dragHandleProps}
+                >
+
+                  <h3>
+                    <Link to={`/applications/${app.id}`}>
+                      {app.company_name}
+                    </Link>
+                  </h3>
+
+                  <p>
+                    {app.position}
+                  </p>
+
+                  <p>
+                    {app.location}
+                  </p>
+
+                  <p>
+                    {app.date_applied}
+                  </p>
+
+                </div>
+                )}
+                </Draggable>
+
+              ))}
+
+              {provided.placeholder}
+
+          </div>
+
+            )}
+          </Droppable>
+
+          <Droppable
+            droppableId="Offer"
+          >
+
+          {(provided) => (
+
+          <div
+            className="column"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+
+            <h2>Offer</h2>
+
+            {sortedApplications
+              .filter(
+                app =>
+                  app.status === "Offer"
+              )
+              .map((app, index) => (
+
+                <Draggable
+                  draggableId={String(app.id)}
+                  index={index}
+                  key={app.id}
+                >
+
+                {(provided) => (
+
+                <div
+                  className="application-card"
+
+                  ref={provided.innerRef}
+
+                  {...provided.draggableProps}
+
+                  {...provided.dragHandleProps}
+                >
+
+                  <h3>
+                    <Link to={`/applications/${app.id}`}>
+                      {app.company_name}
+                    </Link>
+                  </h3>
+
+                  <p>
+                    {app.position}
+                  </p>
+
+                  <p>
+                    {app.location}
+                  </p>
+
+                  <p>
+                    {app.date_applied}
+                  </p>
+
+                </div>
+                )}
+                </Draggable>
+
+              ))}
+
+              {provided.placeholder}
+
+          </div>
+
+            )}
+          </Droppable>
+
+          <Droppable
+            droppableId="Rejected"
+          >
+
+          {(provided) => (
+
+          <div
+            className="column"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+
+            <h2>Rejected</h2>
+
+            {sortedApplications
+              .filter(
+                app =>
+                  app.status === "Rejected"
+              )
+              .map((app, index) => (
+
+                <Draggable
+                  draggableId={String(app.id)}
+                  index={index}
+                  key={app.id}
+                >
+
+                {(provided) => (
+
+                <div
+                  className="application-card"
+
+                  ref={provided.innerRef}
+
+                  {...provided.draggableProps}
+
+                  {...provided.dragHandleProps}
+                >
+
+                  <h3>
+                    <Link to={`/applications/${app.id}`}>
+                      {app.company_name}
+                    </Link>
+                  </h3>
+
+                  <p>
+                    {app.position}
+                  </p>
+
+                  <p>
+                    {app.location}
+                  </p>
+
+                  <p>
+                    {app.date_applied}
+                  </p>
+
+                </div>
+                )}
+                </Draggable>
+
+              ))}
+
+              {provided.placeholder}
+
+          </div>
+
+            )}
+          </Droppable>
 
         </div>
-
-        <div className="column">
-
-          <h2>Interview</h2>
-
-          {sortedApplications
-            .filter(
-              app =>
-                app.status === "Interview"
-            )
-            .map(app => (
-
-              <div
-                key={app.id}
-                className="application-card"
-              >
-
-                <h3>
-                  <Link to={`/applications/${app.id}`}>
-                    {app.company_name}
-                  </Link>
-                </h3>
-
-                <p>
-                  {app.position}
-                </p>
-                
-                <p>
-                  {app.location}
-                </p>
-                
-                <p>
-                  {app.date_applied}
-                </p>
-
-              </div>
-
-            ))}
-
-        </div>
-
-        <div className="column">
-
-          <h2>Offer</h2>
-
-          {sortedApplications
-            .filter(
-              app =>
-                app.status === "Offer"
-            )
-            .map(app => (
-
-              <div
-                key={app.id}
-                className="application-card"
-              >
-
-                <h3>
-                  <Link to={`/applications/${app.id}`}>
-                    {app.company_name}
-                  </Link>
-                </h3>
-
-                <p>
-                  {app.position}
-                </p>
-                
-                <p>
-                  {app.location}
-                </p>
-                
-                <p>
-                  {app.date_applied}
-                </p>
-
-              </div>
-
-            ))}
-
-        </div>
-
-        <div className="column">
-
-          <h2>Rejected</h2>
-
-          {sortedApplications
-            .filter(
-              app =>
-                app.status === "Rejected"
-            )
-            .map(app => (
-
-              <div
-                key={app.id}
-                className="application-card"
-              >
-
-                <h3>
-                  <Link to={`/applications/${app.id}`}>
-                    {app.company_name}
-                  </Link>
-                </h3>
-
-                <p>
-                  {app.position}
-                </p>
-                
-                <p>
-                  {app.location}
-                </p>
-                
-                <p>
-                  {app.date_applied}
-                </p>
-
-              </div>
-
-            ))}
-
-        </div>
-
-      </div>
+      </DragDropContext> 
+        
 
     </div>
   );

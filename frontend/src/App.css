@@ -286,6 +286,16 @@ button:hover {
   font-size: 14px;
 }
 
+/* Application card dragging */
+.application-card {
+  cursor: grab;
+}
+
+.application-card:active {
+  cursor: grabbing;
+  opacity: 0.8;
+}
+
 /* Application details page */
 .notes-card {
 
